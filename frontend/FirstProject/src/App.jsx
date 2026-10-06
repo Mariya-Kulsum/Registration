@@ -15,6 +15,9 @@ function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Update this base URL if hosting backend elsewhere
+  const API_BASE_URL = "https://firstproject-cv9f.onrender.com";
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -32,7 +35,8 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/register`, {
+      // Changed to /register (Try /api/register if server.js has /api prefix)
+      const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +47,7 @@ function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message);
+        setError(data.message || "Registration failed");
         return;
       }
 
@@ -75,7 +79,8 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/login`, {
+      // Changed to /login (Try /api/login if server.js has /api prefix)
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +94,7 @@ function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message);
+        setError(data.message || "Login failed");
         return;
       }
 
